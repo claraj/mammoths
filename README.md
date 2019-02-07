@@ -2,9 +2,7 @@
 
 Intro to data processing; mapping mammoths with Folium and Pandas, using data from [https://paleobiodb.org](https://paleobiodb.org).
 
-[mammoth_marker_map.html](Mammoth marker map)
-
-[mammoth_heat_map.html](Mammoth heat map)
-
-[mammoth_choropleth_map.html](Mammoth choropleth map) 
+* [Mammoth marker map](https://minneapolis-edu.github.io/mammoths/mammoth_color_marker_map.html)
+* [Mammoth heat map](https://minneapolis-edu.github.io/mammoths/mammoth_heatmap.html)
+* [Mammoth choropleth map](https://minneapolis-edu.github.io/mammoths/mammoth_choropleth.html)
 
