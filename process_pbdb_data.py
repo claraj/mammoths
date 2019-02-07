@@ -1,23 +1,22 @@
+""" Process PBDB data into format useful for creating a Folium map """
+
 import csv
 
 mammoth_data = []
 
 with open('pbdb_data.csv', 'r') as csvfile:
-
     reader = csv.reader(csvfile)
 
-    # The first row is the column types, read this line. Keep if needed, but we can discard.
+    # The first row is the column types, read and ignore this line.
     columns = reader.__next__()
 
     # Are interested in col 9, accepted_name
     # Abundance val and abundance unit 22 and 23
     # lat, lng, cols 24 and 25
-    # State, county, in 27 , 28
+    # State, county, in 27, 28
     # geocomment 32
     for row in reader:
-
         # get data of interest. Convert numeric types to floats
-        # write out to new CSV file that another module can read
         name = row[9]
         abd = row[22]
         abd_unit = row[23]
@@ -29,8 +28,9 @@ with open('pbdb_data.csv', 'r') as csvfile:
 
         mammoth_data.append([name, abd, abd_unit, lat, lng, state, county, comment])
 
-
-with open('mammoth_data.csv', 'w') as csvfile:
+# write out to new .csv file that the mapping program will use
+with open('mammoth_finds.csv', 'w') as csvfile:
     writer = csv.writer(csvfile, quoting=csv.QUOTE_NONNUMERIC)
     writer.writerow(['name', 'abd', 'abd_unit', 'lat', 'lng', 'state', 'county', 'comment'])
     writer.writerows(mammoth_data)
+

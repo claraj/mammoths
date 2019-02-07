@@ -1,13 +1,14 @@
 import pandas, folium, json
+from folium import Choropleth
 
-data = pandas.read_csv('mammoth_data.csv')  # dataframe from CSV
+data = pandas.read_csv('mammoth_finds.csv')  # dataframe from CSV
 
 # Need to aggregate all fossils for one state. Some records have more than one
 # mammoth discovered. The abd column has the number of fossils found at the site
 
 # Create a quantity column with a copy of the abd column
 quantities = data['abd']
-# If there is no data, assume that the record is for one mammoth
+# If there is no abundance data, assume that the record is for one mammoth
 quantities = quantities.fillna(value = 1)
 
 # Add the new column to the dataframe
@@ -41,12 +42,12 @@ print(state_data_groups)
 
 # And create the choropleth map
 
-us_states_file = r'us_states.json'   # Path to geo-json file
+us_states_file = 'us_states.json'   # Path to geo-json file
 
-choromap = folium.Map(location=[40, -120], zoom_start=3)
+choro_map = folium.Map(location=[40, -120], zoom_start=3)
 
-choromap.choropleth(
-    geo_path=us_states_file,   # Reads this file
+choro = Choropleth(
+    geo_data=us_states_file,   # Reads this file
     data=state_data_groups,
     columns=['state', 'quantity'],
     key_on='id',     # The key in the geo_path data
@@ -55,7 +56,11 @@ choromap.choropleth(
     legend_name="Mammoth finds per state"
 )
 
-choromap.save('mammoth_choropleth.html')
+choro.add_to(choro_map)
+
+filename = 'mammoth_choropleth.html'
+choro_map.save(filename)
+print('Choropleth map saved to ' + filename)
 
 #TODO - display more data when states are hovered over.
 #This would help http://leafletjs.com/examples/choropleth/
